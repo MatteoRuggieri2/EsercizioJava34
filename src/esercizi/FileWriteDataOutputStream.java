@@ -15,6 +15,13 @@ public class FileWriteDataOutputStream {
 	String[] descs = {"T-shirt", "Mug", "Duke", "Pin", "Key-Chain"};
 	String lineSeparator = System.getProperty("line.separator");
 	
+	
+	//TODO
+	/* - Suddividere in metodi più specializzati
+	 * - Analizzare il corretto funzionamento del programma
+	 * - Scrivere test JUnit
+	 * */
+	
 	// Scrivo per ogni elemento nel file
 	public void writeOnFile(String fileName) {
 		
