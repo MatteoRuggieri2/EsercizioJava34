@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class FileWriteDataOutputStream {
 
+	String fileName = "src/text_files/fatturaNonChar.dat";
 	double[] prices = {19.99, 9.99, 15.99, 3.99, 4.99};
 	int[] units = {12, 8, 13, 29, 50};
 	String[] descs = {"T-shirt", "Mug", "Duke", "Pin", "Key-Chain"};
@@ -21,6 +22,15 @@ public class FileWriteDataOutputStream {
 	 * - Analizzare il corretto funzionamento del programma
 	 * - Scrivere test JUnit
 	 * */
+	
+	public static void main(String[] args) {
+		new FileWriteDataOutputStream().run();
+		
+	}
+	
+	public void run() {
+		writeOnFile(this.fileName);
+	}
 	
 	// Scrivo per ogni elemento nel file
 	public void writeOnFile(String fileName) {
