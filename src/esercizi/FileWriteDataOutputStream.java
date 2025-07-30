@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FileWriteDataOutputStream {
 
@@ -30,6 +32,7 @@ public class FileWriteDataOutputStream {
 	
 	public void run() {
 		writeOnFile(this.fileName);
+		readWritedFile(this.fileName);
 	}
 	
 	// Scrivo per ogni elemento nel file
@@ -57,7 +60,6 @@ public class FileWriteDataOutputStream {
 	}
 	
 	public void readWritedFile(String fileToRead) {
-		
 		
 		double price = 0;
 		int units = 0;
@@ -98,5 +100,37 @@ public class FileWriteDataOutputStream {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private Map<String, Object> readFileLine(DataInputStream dis) throws IOException {
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		double price = 0;
+		int units = 0;
+		
+		price = dis.readDouble();
+		units = dis.readInt();
+		StringBuilder sb = new StringBuilder();
+
+		
+		
+		char charD = dis.readChar();
+		while (charD != this.lineSeparator.charAt(0)) {
+			sb.append(charD);
+			charD = dis.readChar();
+		}
+		
+		if (this.lineSeparator.length() > 1) {
+			dis.readChar();
+		}
+		
+		sb.append(' ');
+		
+		result.put("price", price);
+		result.put("units", units);
+		result.put("productName", sb.toString());
+		
+		return result;
 	}
 }
