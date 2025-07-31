@@ -59,6 +59,7 @@ public class FileWriteDataOutputStream {
 		System.out.println("---> SCRITTURA COMPLETATA <---");
 	}
 	
+	// Questo metodo legge il file ".dat" con il nome fornito
 	public void readWritedFile(String fileToRead) {
 		
 		double price = 0;
@@ -102,19 +103,22 @@ public class FileWriteDataOutputStream {
 		}
 	}
 	
+	/* Questo metodo legge una riga da un DataInputStream fornito come parametro,
+	 e restituisce una mappa con tutti i dati della riga */
 	private Map<String, Object> readFileLine(DataInputStream dis) throws IOException {
 		
 		Map<String, Object> result = new HashMap<>();
 		
 		double price = 0;
 		int units = 0;
-		
-		price = dis.readDouble();
-		units = dis.readInt();
 		StringBuilder sb = new StringBuilder();
 
+		// Leggo prezzo e unità
+		price = dis.readDouble();
+		units = dis.readInt();
+
 		
-		
+		// Leggo la descrizione del prodotto (nome)
 		char charD = dis.readChar();
 		while (charD != this.lineSeparator.charAt(0)) {
 			sb.append(charD);
@@ -127,6 +131,7 @@ public class FileWriteDataOutputStream {
 		
 		sb.append(' ');
 		
+		// Salvo i dati nella Map
 		result.put("price", price);
 		result.put("units", units);
 		result.put("productName", sb.toString());
