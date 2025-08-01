@@ -68,31 +68,34 @@ public class FileWriteDataOutputStream {
 		DataInputStream in = null;
 		try {
 			in = new DataInputStream(new FileInputStream(fileToRead));
-			
-			StringBuilder sb = null;
-			System.out.println("\n--- STAMPA DEI PRODOTTI ---");
+//			
+//			StringBuilder sb = null;
+//			System.out.println("\n--- STAMPA DEI PRODOTTI ---");
 			while (in.available() > 0) {
+//				
+//				price = in.readDouble();
+//				units = in.readInt();
+//				sb = new StringBuilder();
+//
+//				
+//				
+//				char charD = in.readChar();
+//				while (charD != this.lineSeparator.charAt(0)) {
+//					sb.append(charD);
+//					charD = in.readChar();
+//				}
+//				
+//				if (this.lineSeparator.length() > 1) {
+//					in.readChar();
+//				}
+//				
+//				sb.append(' ');
+////				System.out.println("Prodotto " + i + " scritto");
+//				System.out.println("Prodotto: " + sb.toString());
+//				System.out.println("Prezzo: " + price + " | " + "Quantità: " + units);
+//				System.out.println("------------------------------------");
 				
-				price = in.readDouble();
-				units = in.readInt();
-				sb = new StringBuilder();
-
-				
-				
-				char charD = in.readChar();
-				while (charD != this.lineSeparator.charAt(0)) {
-					sb.append(charD);
-					charD = in.readChar();
-				}
-				
-				if (this.lineSeparator.length() > 1) {
-					in.readChar();
-				}
-				
-				sb.append(' ');
-//				System.out.println("Prodotto " + i + " scritto");
-				System.out.println("Prodotto: " + sb.toString());
-				System.out.println("Prezzo: " + price + " | " + "Quantità: " + units);
+				System.out.println(mapProductToString(readFileLine(in)));
 				System.out.println("------------------------------------");
 			}
 			
@@ -137,5 +140,18 @@ public class FileWriteDataOutputStream {
 		result.put("productName", sb.toString());
 		
 		return result;
+	}
+	
+	//TODO
+	/* Invece di avere 3 elementi dentro la mappa di un solo articolo, fa si che ogni
+	 * elemento all'interno della mappa sia un articolo diverso, anche se in realtà la 
+	 * mappa verrà sempre ricreata e fornita con un solo prodotto dato che si trova nel
+	 * ciclo while */
+	
+	// Questo metodo stampa il prodotto presente nella mappa (deve essere una mappa con 1 solo prodotto)
+	private String mapProductToString(Map<String, Object> article) {
+		return "Prodotto: " + article.get("productName") + "\n"
+				+ "Prezzo: " + article.get("price") + "\n"
+				+ "Quantità: " + article.get("units");
 	}
 }
