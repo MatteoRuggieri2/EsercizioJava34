@@ -7,7 +7,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FileWriteDataOutputStream {
@@ -108,9 +110,10 @@ public class FileWriteDataOutputStream {
 	
 	/* Questo metodo legge una riga da un DataInputStream fornito come parametro,
 	 e restituisce una mappa con tutti i dati della riga */
-	private Map<String, Object> readFileLine(DataInputStream dis) throws IOException {
+	private ArrayList<Map<String, Object>> readFileLine(DataInputStream dis) throws IOException {
 		
-		Map<String, Object> result = new HashMap<>();
+		ArrayList<Map<String, Object>> result = new ArrayList<>();
+		Map<String, Object> mapElement = new HashMap<>();
 		
 		double price = 0;
 		int units = 0;
@@ -135,9 +138,10 @@ public class FileWriteDataOutputStream {
 		sb.append(' ');
 		
 		// Salvo i dati nella Map
-		result.put("price", price);
-		result.put("units", units);
-		result.put("productName", sb.toString());
+		mapElement.put("price", price);
+		mapElement.put("units", units);
+		mapElement.put("productName", sb.toString());
+		result.add(mapElement);
 		
 		return result;
 	}
