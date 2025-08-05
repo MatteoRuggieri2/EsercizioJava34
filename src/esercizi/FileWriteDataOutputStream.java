@@ -7,10 +7,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class FileWriteDataOutputStream {
 
@@ -20,12 +16,13 @@ public class FileWriteDataOutputStream {
 	final String[] descs = {"T-shirt", "Mug", "Duke", "Pin", "Key-Chain"};
 	final String lineSeparator = System.getProperty("line.separator");
 	
-	//TODO
-	/* - Suddividere in metodi più specializzati
-	 * - Analizzare il corretto funzionamento del programma
-	 * - Scrivere test JUnit
-	 * */
+	/* Un record è una forma compatta per creare classi immutabili:
+	Questo sostituisce tutta la definizione della classe Product e
+	fornisce automaticamente costruttore, getter, equals, hashCode, toString. */
+    private record Article(String productName, double price, int units) {}
 	
+    
+    
 	public static void main(String[] args) {
 		new FileWriteDataOutputStream().run();
 		
@@ -50,12 +47,14 @@ public class FileWriteDataOutputStream {
 				out.writeChars(this.lineSeparator);
 				System.out.println("Prodotto " + i + " scritto");
 			}
+			out.close();
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		
 		System.out.println("\n---> SCRITTURA COMPLETATA <---\n");
 	}
@@ -69,7 +68,7 @@ public class FileWriteDataOutputStream {
 
 			while (in.available() > 0) {
 				// Prendo il primo ed unico elemento della lista
-				System.out.println(mapProductToString(readFileLine(in).get(0)));
+				System.out.println(articleToString(readArticleFromFileLine(in)));
 				System.out.println("------------------------------------");
 			}
 			
@@ -82,18 +81,13 @@ public class FileWriteDataOutputStream {
 	
 	/* Questo metodo legge una riga da un DataInputStream fornito come parametro,
 	 e restituisce una mappa con tutti i dati della riga */
-	private ArrayList<Map<String, Object>> readFileLine(DataInputStream dis) throws IOException {
+	private Article readArticleFromFileLine(DataInputStream dis) throws IOException {
 		
-		ArrayList<Map<String, Object>> result = new ArrayList<>();
-		Map<String, Object> mapElement = new HashMap<>();
-		
-		double price = 0;
-		int units = 0;
 		StringBuilder sb = new StringBuilder();
 
 		// Leggo prezzo e unità
-		price = dis.readDouble();
-		units = dis.readInt();
+		double price = dis.readDouble();
+		int units = dis.readInt();
 
 		
 		// Leggo la descrizione del prodotto (nome)
@@ -109,31 +103,26 @@ public class FileWriteDataOutputStream {
 		
 		sb.append(' ');
 		
-		// Salvo i dati nella Map
-		mapElement.put("price", price);
-		mapElement.put("units", units);
-		mapElement.put("productName", sb.toString());
-		result.add(mapElement);
-		
-		return result;
+		return new Article(sb.toString(), price, units);
 	}
 	
 	// Questo metodo stampa il prodotto presente nella mappa (deve essere una mappa con 1 solo prodotto)
-	private String mapProductToString(Map<String, Object> article) {
+	private String articleToString(Article article) {
 		
 		/* Questo metodo in questo caso può andare bene perchè non
 		abbiamo tante concatenazioni, però è meglio utilizzare la
 		classe StringBuilder che è ottimizzata per questo tipo di operazioni. */
-//		return "Prodotto: " + article.get("productName") + "\n"
-//				+ "Prezzo: " + article.get("price") + "\n"
-//				+ "Quantità: " + article.get("units");
+//			return "Prodotto: " + article.get("productName") + "\n"
+//					+ "Prezzo: " + article.get("price") + "\n"
+//					+ "Quantità: " + article.get("units");
 		
 		// Metodo ottimizzato, ma in queso caso (di output molto semplice) non è necessario
 		StringBuilder sb = new StringBuilder();
-		sb.append("Prodotto: ").append(article.get("productName")).append("\n")
-		  .append("Prezzo: ").append(article.get("price")).append("\n")
-		  .append("Quantità: ").append(article.get("units"));
+		sb.append("Prodotto: ").append(article.productName).append("\n")
+		  .append("Prezzo: ").append(article.price).append("\n")
+		  .append("Quantità: ").append(article.units);
 		
 		return sb.toString();
 	}
+	
 }
