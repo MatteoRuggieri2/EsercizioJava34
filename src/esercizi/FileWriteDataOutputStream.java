@@ -14,12 +14,11 @@ import java.util.Map;
 
 public class FileWriteDataOutputStream {
 
-	String fileName = "src/text_files/fatturaNonChar.dat";
-	double[] prices = {19.99, 9.99, 15.99, 3.99, 4.99};
-	int[] units = {12, 8, 13, 29, 50};
-	String[] descs = {"T-shirt", "Mug", "Duke", "Pin", "Key-Chain"};
-	String lineSeparator = System.getProperty("line.separator");
-	
+	final String fileName = "src/text_files/fatturaNonChar.dat";
+	final double[] prices = {19.99, 9.99, 15.99, 3.99, 4.99};
+	final int[] units = {12, 8, 13, 29, 50};
+	final String[] descs = {"T-shirt", "Mug", "Duke", "Pin", "Key-Chain"};
+	final String lineSeparator = System.getProperty("line.separator");
 	
 	//TODO
 	/* - Suddividere in metodi più specializzati
@@ -58,7 +57,7 @@ public class FileWriteDataOutputStream {
 			e.printStackTrace();
 		}
 		
-		System.out.println("---> SCRITTURA COMPLETATA <---");
+		System.out.println("\n---> SCRITTURA COMPLETATA <---\n");
 	}
 	
 	// Questo metodo legge il file ".dat" con il nome fornito
@@ -69,7 +68,8 @@ public class FileWriteDataOutputStream {
 			in = new DataInputStream(new FileInputStream(fileToRead));
 
 			while (in.available() > 0) {
-				System.out.println(mapProductToString(readFileLine(in).get(0))); // Prendo il primo ed unico elemento della lista
+				// Prendo il primo ed unico elemento della lista
+				System.out.println(mapProductToString(readFileLine(in).get(0)));
 				System.out.println("------------------------------------");
 			}
 			
@@ -118,18 +118,22 @@ public class FileWriteDataOutputStream {
 		return result;
 	}
 	
-	//TODO - Controlla se conviene usare StringBuilder
 	// Questo metodo stampa il prodotto presente nella mappa (deve essere una mappa con 1 solo prodotto)
 	private String mapProductToString(Map<String, Object> article) {
-		return "Prodotto: " + article.get("productName") + "\n"
-				+ "Prezzo: " + article.get("price") + "\n"
-				+ "Quantità: " + article.get("units");
+		
+		/* Questo metodo in questo caso può andare bene perchè non
+		abbiamo tante concatenazioni, però è meglio utilizzare la
+		classe StringBuilder che è ottimizzata per questo tipo di operazioni. */
+//		return "Prodotto: " + article.get("productName") + "\n"
+//				+ "Prezzo: " + article.get("price") + "\n"
+//				+ "Quantità: " + article.get("units");
 		
 		// Metodo ottimizzato, ma in queso caso (di output molto semplice) non è necessario
-//		StringBuilder sb = new StringBuilder();
-//		sb.append("Prodotto: ").append(article.get("productName")).append("\n")
-//		  .append("Prezzo: ").append(article.get("price")).append("\n")
-//		  .append("Quantità: ").append(article.get("units"));
-//		return sb.toString();
+		StringBuilder sb = new StringBuilder();
+		sb.append("Prodotto: ").append(article.get("productName")).append("\n")
+		  .append("Prezzo: ").append(article.get("price")).append("\n")
+		  .append("Quantità: ").append(article.get("units"));
+		
+		return sb.toString();
 	}
 }
