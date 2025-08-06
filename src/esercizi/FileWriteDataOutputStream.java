@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileWriteDataOutputStream {
 
@@ -59,16 +61,21 @@ public class FileWriteDataOutputStream {
 		System.out.println("\n---> SCRITTURA COMPLETATA <---\n");
 	}
 	
+	//TODO - Questo metodo dovrebbe tornare un array di article e lanciare un metodo per printare gli article
 	// Questo metodo legge il file ".dat" con il nome fornito
-	public void readWritedFile(String fileToRead) {
+	public List<Article> readWritedFile(String fileToRead) {
 		
+		List<Article> articleList = new ArrayList<>();
 		DataInputStream in = null;
 		try {
 			in = new DataInputStream(new FileInputStream(fileToRead));
 
 			while (in.available() > 0) {
-				// Prendo il primo ed unico elemento della lista
-				System.out.println(articleToString(readArticleFromFileLine(in)));
+				
+				Article currentArticle = readArticleFromFileLine(in);
+				articleList.add(currentArticle);
+				
+				System.out.println(articleToString(currentArticle));
 				System.out.println("------------------------------------");
 			}
 			
@@ -77,6 +84,8 @@ public class FileWriteDataOutputStream {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return articleList;
 	}
 	
 	/* Questo metodo legge una riga da un DataInputStream fornito come parametro,
