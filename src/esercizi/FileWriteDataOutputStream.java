@@ -32,9 +32,12 @@ public class FileWriteDataOutputStream {
 	
 	public void run() {
 		writeOnFile(this.fileName);
-		readWritedFile(this.fileName);
+		List<Article> articleList = readWritedFile(this.fileName);
+		printArticleList(articleList);
 	}
 	
+	
+
 	// Scrivo per ogni elemento nel file
 	public void writeOnFile(String fileName) {
 		
@@ -61,7 +64,6 @@ public class FileWriteDataOutputStream {
 		System.out.println("\n---> SCRITTURA COMPLETATA <---\n");
 	}
 	
-	//TODO - Questo metodo dovrebbe tornare un array di article e lanciare un metodo per printare gli article
 	// Questo metodo legge il file ".dat" con il nome fornito
 	public List<Article> readWritedFile(String fileToRead) {
 		
@@ -71,12 +73,8 @@ public class FileWriteDataOutputStream {
 			in = new DataInputStream(new FileInputStream(fileToRead));
 
 			while (in.available() > 0) {
-				
 				Article currentArticle = readArticleFromFileLine(in);
 				articleList.add(currentArticle);
-				
-				System.out.println(articleToString(currentArticle));
-				System.out.println("------------------------------------");
 			}
 			
 		} catch (FileNotFoundException e) {
@@ -132,6 +130,13 @@ public class FileWriteDataOutputStream {
 		  .append("Quantità: ").append(article.units);
 		
 		return sb.toString();
+	}
+	
+	// Questo metodo stampa la lista di articoli
+	private void printArticleList(List<Article> articleList) {
+		articleList.stream().forEach((article) -> {
+			System.out.println(articleToString(article) + "\n------------------------------------");
+		});
 	}
 	
 }
