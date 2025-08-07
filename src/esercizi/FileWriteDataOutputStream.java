@@ -114,7 +114,7 @@ public class FileWriteDataOutputStream {
 	}
 	
 	// Questo metodo stampa il prodotto presente nella mappa (deve essere una mappa con 1 solo prodotto)
-	private String articleToString(Article article) {
+	public String articleToString(Article article) {
 		
 		/* Questo metodo in questo caso può andare bene perchè non
 		abbiamo tante concatenazioni, però è meglio utilizzare la
