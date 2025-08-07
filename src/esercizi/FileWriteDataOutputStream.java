@@ -25,10 +25,10 @@ public class FileWriteDataOutputStream {
 	
     
     
-	public static void main(String[] args) {
-		new FileWriteDataOutputStream().run();
-		
-	}
+//	public static void main(String[] args) {
+//		new FileWriteDataOutputStream().run();
+//		
+//	}
 	
 	public void run() {
 		writeOnFile(this.fileName);

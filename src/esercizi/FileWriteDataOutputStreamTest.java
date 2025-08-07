@@ -1,7 +1,5 @@
 package esercizi;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -14,16 +12,23 @@ class FileWriteDataOutputStreamTest {
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		fwdos = new FileWriteDataOutputStream();
+		fwdos.run();
 	}
 
 	@Test
-	void testWriteOnFile() {
-		fwdos.writeOnFile(this.fileToWriteName);
+	void testReadWritedFile() {
+		
 	}
 	
 	@Test
-	void testReadWritedFiles() {
-		fwdos.readWritedFile(this.fileToReadName);
+	void testWriteOnFile() {
+		
 	}
+	
+	@Test
+	void testArticleToString() {
+		
+	}
+	
 
 }
