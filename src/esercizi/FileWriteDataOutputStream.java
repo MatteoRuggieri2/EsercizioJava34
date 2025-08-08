@@ -21,14 +21,14 @@ public class FileWriteDataOutputStream {
 	/* Un record è una forma compatta per creare classi immutabili:
 	Questo sostituisce tutta la definizione della classe Product e
 	fornisce automaticamente costruttore, getter, equals, hashCode, toString. */
-    private record Article(String productName, double price, int units) {}
+    public record Article(String productName, double price, int units) {}
 	
     
     
-//	public static void main(String[] args) {
-//		new FileWriteDataOutputStream().run();
-//		
-//	}
+	public static void main(String[] args) {
+		new FileWriteDataOutputStream().run();
+		
+	}
 	
 	public void run() {
 		writeOnFile(this.fileName);
