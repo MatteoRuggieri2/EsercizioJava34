@@ -110,7 +110,7 @@ public class FileWriteDataOutputStream {
 		
 		sb.append(' ');
 		
-		return new Article(sb.toString(), price, units);
+		return new Article(sb.toString().trim(), price, units);
 	}
 	
 	// Questo metodo stampa il prodotto presente nella mappa (deve essere una mappa con 1 solo prodotto)
